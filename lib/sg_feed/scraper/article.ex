@@ -3,7 +3,8 @@ defmodule SGFeed.Scraper.Article do
   Represents a single article, with all its possible metadata etc.
   """
 
-  @type t
+  @type t :: struct()
+
   defstruct [
     # Main content
     :base_url,

@@ -7,5 +7,5 @@ defmodule SGFeed.Scraper.Client do
   @doc """
   Get the HTML of the url provided.
   """
-  @callback get_html(url) :: {:ok, String.t} | {:error, term}
+  @callback get_html(String.t) :: {:ok, String.t} | {:error, term}
 end

@@ -20,5 +20,25 @@ defmodule SGFeed.Scraper.Strategy.TheNewPaper do
       :thumbnail,
     ]
   end
+  def attributes(:article) do
+    [
+      :subtitle,
+      :highlight,
+      :body,
+      :thumbnail,
+      :image,
+      :authors,
+      :published_at,
+    ]
+  end
+
+  def articles(html) do
+    html
+    |> Floki.find(".card")
+    |> Floki.raw_html()
+  end
+
+  def title(html) do
+  end
 end
 
