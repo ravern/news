@@ -1,20 +1,7 @@
-# SGFeed
+**In Development**
 
-To start your Phoenix server:
+# SG Feed
+A feed aggregator for Singapore's most popular websites. Built on Elixir & Phoenix. It is built as an side-project for me. It is mostly for me to learn how to build a solid Elixir app and ultimately deploy it.
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
-  * Install Node.js dependencies with `cd assets && npm install`
-  * Start Phoenix endpoint with `mix phx.server`
-
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
-
-Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
-
-## Learn more
-
-  * Official website: http://www.phoenixframework.org/
-  * Guides: http://phoenixframework.org/docs/overview
-  * Docs: https://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
+## How it works
+Scrapes data from popular websites in Singapore's media landscape (e.g. Stomp, Straits Times, The New Paper, etc.) and combines it into a single feed. It has a very simple crawling strategy. It looks for a list of articles, and then goes through each article to get the content from that article. It also extracts metadata like author, publish date etc. Behaviour is defined in a "strategy"; 1 strategy exists per website.
