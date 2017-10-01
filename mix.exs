@@ -43,6 +43,7 @@ defmodule SGFeed.Mixfile do
       {:cowboy, "~> 1.0"},
       {:httpoison, "~> 0.13"},
       {:floki, "~> 0.18"},
+      {:timex, "~> 3.0"},
     ]
   end
 

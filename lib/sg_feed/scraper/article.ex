@@ -18,7 +18,7 @@ defmodule SGFeed.Scraper.Article do
     :image,
     
     # Metadata
-    :authors,
+    :author,
     :published_at,
   ]
 end
