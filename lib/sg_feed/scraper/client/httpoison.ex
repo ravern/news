@@ -2,6 +2,7 @@ defmodule SGFeed.Scraper.Client.HTTPoison do
   @moduledoc false
   @behaviour SGFeed.Scraper.Client
 
+  def get_html(nil), do: {:error, :nil_passed}
   def get_html(url) do
     # TLS v1.2 thing because of known issue
     # https://bugs.erlang.org/browse/ERL-192

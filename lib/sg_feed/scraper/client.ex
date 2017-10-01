@@ -5,7 +5,8 @@ defmodule SGFeed.Scraper.Client do
   """
 
   @doc """
-  Get the HTML of the url provided.
+  Get the HTML of the url provided. It should also handle the nil case,
+  preferably with an error.
   """
-  @callback get_html(String.t) :: {:ok, String.t} | {:error, term}
+  @callback get_html(String.t | nil) :: {:ok, String.t} | {:error, term}
 end
