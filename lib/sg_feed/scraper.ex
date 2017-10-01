@@ -25,13 +25,14 @@ defmodule SGFeed.Scraper do
   def scrape(opts \\ []) do
     opts = Options.apply_defaults(opts)
     strategies = opts[:strategies]
+    timeout = opts[:timeout]
 
     # Pipeline
     strategies
     |> Stream.flat_map(&get_categories/1)
-    |> Task.async_stream(&fetch_and_parse_feed(&1, opts), max_concurrency: 5)
+    |> Task.async_stream(&fetch_and_parse_feed(&1, opts), max_concurrency: 5, timeout: timeout)
     |> Stream.flat_map(fn({:ok, articles}) -> articles end)
-    |> Task.async_stream(&fetch_and_parse_article(&1, opts), max_concurrency: 10)
+    |> Task.async_stream(&fetch_and_parse_article(&1, opts), max_concurrency: 10, timeout: timeout)
     |> Stream.map(fn({:ok, article}) -> article end)
     |> Stream.filter(&Kernel.!=(&1, nil))
     |> Stream.map(&insert_if_needed/1)

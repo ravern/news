@@ -13,6 +13,7 @@ defmodule SGFeed.Scraper.Options do
     defaults = [
       strategies: strategies(),
       client: client(),
+      timeout: timeout(),
     ]
 
     # Merge
@@ -24,9 +25,11 @@ defmodule SGFeed.Scraper.Options do
     SGFeed.Scraper.Strategy.TheNewPaper,
   ]
   @client SGFeed.Scraper.Client.HTTPoison
+  @timeout 10000
 
   # Fetch from config, if nil then hardcoded defaults
   defp config,     do: Application.get_env(:sg_news, :scraper, [])
   defp strategies, do: Keyword.get(config(), :strategies, @strategies)
   defp client,     do: Keyword.get(config(), :client, @client)
+  defp timeout,    do: Keyword.get(config(), :timeout, @timeout)
 end
