@@ -12,19 +12,14 @@ defmodule SGFeed.Scraper do
 
   ## Options
 
-      `:strategies` - List of strategies to use in the scraping session.  
+      `:strategies` - List of strategies to use in the scraping session.
+
       `:client` - HTTP client to use to perform requests.
 
       `:insert?` - Whether to insert the article into the db once fetched.
                    If true, then articles will be inserted into the db, and
                    the corresponding Ecto structs will be returned. Otherwise,
                    the `SGFeed.Scraper.Article` structs will be returned
-          
-  ## Examples
-
-      iex> opts = [strategies: [SGFeed.Scraper.MockStrategy], client: SGFeed.Scraper.MockClient]
-      iex> Enum.count(SGFeed.Scraper.scrape(opts))
-      6
   """
   @spec scrape(keyword()) :: [SGFeed.Scraper.Article.t]
   def scrape(opts \\ []) do
@@ -33,28 +28,26 @@ defmodule SGFeed.Scraper do
 
     # Pipeline
     strategies
-    |> Flow.from_enumerable()
-    |> Flow.flat_map(&get_categories/1)
-    |> Flow.flat_map(&fetch_and_parse_feed(&1, opts))
-    |> Flow.map(&fetch_and_parse_article(&1, opts))
-    |> Flow.map(&insert_if_needed/1)
+    |> Stream.flat_map(&get_categories/1)
+    |> Task.async_stream(&fetch_and_parse_feed(&1, opts), max_concurrency: 5)
+    |> Stream.flat_map(fn({:ok, articles}) -> articles end)
+    |> Task.async_stream(&fetch_and_parse_article(&1, opts), max_concurrency: 10)
+    |> Stream.map(fn({:ok, article}) -> article end)
+    |> Stream.filter(&Kernel.!=(&1, nil))
+    |> Stream.map(&insert_if_needed/1)
     |> Enum.to_list()
   end
 
-  @doc """
-  Returns a list of categories and their corresponding
-  strategies.
-  """
-  def get_categories(strategy) do
+  # Returns a list of categories and their corresponding
+  # strategies.
+  defp get_categories(strategy) do
     strategy.categories()
     |> Enum.map(&{strategy, &1})
   end
 
-  @doc """
-  Fetches the feed data based on category given, parses the data,
-  and returns the list of article maps from the data.
-  """
-  def fetch_and_parse_feed({strategy, {category_name, category_path}}, opts) do
+  # Fetches the feed data based on category given, parses the data,
+  # and returns the list of article maps from the data.
+  defp fetch_and_parse_feed({strategy, {category_name, category_path}}, opts) do
     # Take note that maps are used until the last part, where they are converted
     # to full-fledged article structs
 
@@ -76,11 +69,9 @@ defmodule SGFeed.Scraper do
     end
   end
 
-  @doc """
-  Fetches more specific article data based on article given, parses
-  the data and returns the article struct.
-  """
-  def fetch_and_parse_article({strategy, article}, opts) do
+  # Fetches more specific article data based on article given, parses
+  # the data and returns the article struct.
+  defp fetch_and_parse_article({strategy, article}, opts) do
     client = opts[:client]
 
     case client.get_html(article.permalink) do
@@ -95,15 +86,13 @@ defmodule SGFeed.Scraper do
       {:error, reason} ->
         # TODO Better error handling
         Logger.debug("Failed to fetch article due to reason: #{reason}")
-        []
+        nil
     end
   end
 
-  @doc """
-  Inserts the article into the DB and returns the Ecto struct if the
-  `insert?` option is passed.
-  """
-  def insert_if_needed(article) do
+  # Inserts the article into the DB and returns the Ecto struct if the
+  # `insert?` option is passed.
+  defp insert_if_needed(article) do
     article
   end
 
@@ -111,8 +100,13 @@ defmodule SGFeed.Scraper do
   defp extract_articles(html, strategy) do
     html
     |> strategy.articles()
-    |> Enum.map(&extract_article_data(&1, strategy, :feed))
-    |> Enum.map(&Map.put(&1, :permalink, strategy.permalink(html)))
+    |> Enum.map(&{extract_article_data(&1, strategy, :feed), &1})
+    |> Enum.map(&put_permalink(&1, strategy))
+  end
+
+  # Puts the permalink into the article
+  defp put_permalink({article, html}, strategy) do
+    Map.put(article, :permalink, strategy.permalink(html))
   end
 
   # Extracts article info out from the HTML, based on the type of attributes

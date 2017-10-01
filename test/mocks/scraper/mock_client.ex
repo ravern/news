@@ -53,6 +53,7 @@ defmodule SGFeed.Scraper.MockClient do
     {:ok, html}
   end
 
+  def get_html("test/articles/6"), do: {:error, :non_200}
   def get_html("test/articles/" <> num) do
     html =
       """

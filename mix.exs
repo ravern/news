@@ -42,7 +42,6 @@ defmodule SGFeed.Mixfile do
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:httpoison, "~> 0.13"},
-      {:flow, "~> 0.11"},
       {:floki, "~> 0.18"},
     ]
   end
