@@ -1,3 +1,3 @@
-defmodule SGFeedWeb.PageViewTest do
+defmodule SGFeedWeb.ArticleViewTest do
   use SGFeedWeb.ConnCase, async: true
 end

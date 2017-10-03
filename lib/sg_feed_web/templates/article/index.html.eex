@@ -1,1 +1,3 @@
-Hello
+<%= for article <- @articles do %>
+  Hello
+<% end %>

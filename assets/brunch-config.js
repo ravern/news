@@ -1,28 +1,13 @@
 exports.config = {
   // See http://brunch.io/#documentation for docs.
-  files: {
-    javascripts: {
-      joinTo: "js/app.js"
-
-      // To use a separate vendor.js bundle, specify two files path
-      // http://brunch.io/docs/config#-files-
-      // joinTo: {
-      //   "js/app.js": /^js/,
-      //   "js/vendor.js": /^(?!js)/
-      // }
-      //
-      // To change the order of concatenation of files, explicitly mention here
-      // order: {
-      //   before: [
-      //     "vendor/js/jquery-2.1.1.js",
-      //     "vendor/js/bootstrap.min.js"
-      //   ]
-      // }
+  files: { javascripts: { joinTo: "js/app.js"
     },
     stylesheets: {
-      joinTo: "css/app.css"
-    },
-    templates: {
+      joinTo: "css/app.css",
+      order: {
+        after: ["priv/static/css/app.scss"]
+      }
+    }, templates: {
       joinTo: "js/app.js"
     }
   },
@@ -47,7 +32,16 @@ exports.config = {
     babel: {
       // Do not use ES6 compiler in vendor code
       ignore: [/vendor/]
-    }
+    },
+    copycat: {
+      "fonts": ["node_modules/font-awesome/fonts"] // copy node_modules/font-awesome/fonts/* to priv/static/fonts/
+    },
+    sass: {
+      options: {
+        includePaths: ["node_modules/bootstrap/scss", "node_modules/font-awesome/scss"], // tell sass-brunch where to look for files to @import
+        precision: 8,
+      },
+    },
   },
 
   modules: {
@@ -57,6 +51,12 @@ exports.config = {
   },
 
   npm: {
-    enabled: true
-  }
+    enabled: true,
+    globals: {
+      $: 'jquery',
+      jQuery: 'jquery',
+      Popper: 'popper.js',
+      bootstrap: 'bootstrap',
+    },
+  },
 };

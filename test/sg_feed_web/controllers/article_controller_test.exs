@@ -1,0 +1,8 @@
+defmodule SGFeedWeb.ArticleControllerTest do
+  use SGFeedWeb.ConnCase
+
+  test "GET /", %{conn: conn} do
+    conn = get conn, "/"
+    assert html_response(conn, 200) =~ "My SG Feed"
+  end
+end
