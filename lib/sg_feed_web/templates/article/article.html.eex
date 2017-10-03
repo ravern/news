@@ -1,0 +1,11 @@
+<div class="card h-100 rounded-0 bg-primary text-white">
+  <img class="card-img-top" src="<%= @article.thumbnail %>" />
+  <div class="card-body">
+    <h3 class="card-title"><%= @article.title %></h3>
+    <h5 class="card-subtitle"><%= @article.subtitle %></h5>
+    <button class="btn btn-danger text-white mt-auto">
+      <b>20</b>
+      <i class="fa fa-thumbs-up"></i>
+    </button>
+  </div>
+</div>

@@ -54,7 +54,7 @@ defmodule SGFeed.Scraper do
 
     client = opts[:client]
     category_url = strategy.base_url <> category_path
-    info = %{base_url: strategy.base_url, category: category_name}
+    info = %{base_url: strategy.base_url, category: to_string(category_name)}
 
     case client.get_html(category_url) do
       {:ok, html} ->
@@ -81,9 +81,6 @@ defmodule SGFeed.Scraper do
           html
           |> extract_article_data(strategy, :article)
           |> Map.merge(article)
-        # Convert to article struct
-        struct(SGFeed.Scraper.Article, article)
-
       {:error, reason} ->
         # TODO Better error handling
         Logger.debug("Failed to fetch article due to reason: #{reason}")
@@ -94,7 +91,10 @@ defmodule SGFeed.Scraper do
   # Inserts the article into the DB and returns the Ecto struct if the
   # `insert?` option is passed.
   defp insert_if_needed(article) do
-    article
+    case SGFeed.Articles.create_article(article) do
+      {:ok, article} -> article
+      {:error, changeset} -> IO.inspect(changeset); article
+    end
   end
 
   # Extracts the articles from HTML using strategy

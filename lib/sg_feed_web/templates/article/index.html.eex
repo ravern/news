@@ -1,3 +1,9 @@
-<%= for article <- @articles do %>
-  Hello
+<%= for articles <- split_articles(@articles) do %>
+  <div class="row">
+    <%= for article <- articles do %>
+      <div class="col-md-4 mb-3">
+        <%= render "article.html", article: article %>
+      </div>
+    <% end %>
+  </div>
 <% end %>

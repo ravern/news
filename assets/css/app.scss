@@ -4,3 +4,10 @@ $fa-font-path: "../fonts";
 // Customizations
 
 @import "bootstrap";
+
+// Some other classes
+.thumbnail {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
