@@ -1,6 +1,6 @@
-defmodule SGFeed.Scraper.MockClient do
+defmodule NewsSearch.Scraper.MockClient do
   @moduledoc false
-  @behaviour SGFeed.Scraper.Client
+  @behaviour NewsSearch.Scraper.Client
 
   def get_html("test/one") do
     html =

@@ -1,4 +1,4 @@
-defmodule SGFeed.DataCase do
+defmodule NewsSearch.DataCase do
   @moduledoc """
   This module defines the setup for tests requiring
   access to the application's data layer.
@@ -16,20 +16,20 @@ defmodule SGFeed.DataCase do
 
   using do
     quote do
-      alias SGFeed.Repo
+      alias NewsSearch.Repo
 
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
-      import SGFeed.DataCase
+      import NewsSearch.DataCase
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(SGFeed.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(NewsSearch.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(SGFeed.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(NewsSearch.Repo, {:shared, self()})
     end
 
     :ok

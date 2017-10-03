@@ -1,4 +1,4 @@
-defmodule SGFeed.Repo.Migrations.CreateArticles do
+defmodule NewsSearch.Repo.Migrations.CreateArticles do
   use Ecto.Migration
 
   def change do

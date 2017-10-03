@@ -6,16 +6,16 @@
 use Mix.Config
 
 # General application configuration
-config :sg_feed,
-  namespace: SGFeed,
-  ecto_repos: [SGFeed.Repo]
+config :news_search,
+  namespace: NewsSearch,
+  ecto_repos: [NewsSearch.Repo]
 
 # Configures the endpoint
-config :sg_feed, SGFeedWeb.Endpoint,
+config :news_search, NewsSearchWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "hlyYMvGjHeRRmjOxNPBRIUwQSMCaBntjaTEc8Bjrs7Fa0FRj52xZfY/5NH8ffLRJ",
-  render_errors: [view: SGFeedWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: SGFeed.PubSub,
+  render_errors: [view: NewsSearchWeb.ErrorView, accepts: ~w(html json)],
+  pubsub: [name: NewsSearch.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger

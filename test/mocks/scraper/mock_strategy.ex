@@ -1,6 +1,6 @@
-defmodule SGFeed.Scraper.MockStrategy do
+defmodule NewsSearch.Scraper.MockStrategy do
   @moduledoc false
-  @behaviour SGFeed.Scraper.Strategy
+  @behaviour NewsSearch.Scraper.Strategy
 
   def base_url, do: "test"
 
