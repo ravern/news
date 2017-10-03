@@ -1,0 +1,9 @@
+<div class="row mt-3">
+  <h4 class="text-left mx-3 mt-1">SG News Search</h4>
+  <%= form_for @conn, search_path(@conn, :index), [as: :query, method: "get", class: "col-md-7 mx-0"], fn(f) -> %>
+    <div class="form-group d-flex flex-row">
+      <%= text_input f, :string, class: "form-control" %>
+      <%= submit "Search", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

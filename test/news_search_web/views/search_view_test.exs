@@ -1,3 +1,3 @@
-defmodule NewsSearchWeb.ArticleViewTest do
+defmodule NewsSearchWeb.SearchViewTest do
   use NewsSearchWeb.ConnCase, async: true
 end

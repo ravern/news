@@ -1,0 +1,14 @@
+<div class="d-flex justify-content-center align-items-center" style="height: 100vh">
+  <div class="text-center" style="width: 100%">
+    <h1>SG News Search</h1>
+    <p>Search for an article, a category or a date related to SG news.</p>
+    <div class="row">
+      <%= form_for @conn, search_path(@conn, :index), [as: :query, method: "get", class: "col-md-7 mx-md-auto"], fn(f) -> %>
+        <div class="form-group d-flex flex-row">
+          <%= text_input f, :string, class: "form-control" %>
+          <%= submit "Search", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

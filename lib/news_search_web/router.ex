@@ -16,6 +16,7 @@ defmodule NewsSearchWeb.Router do
   scope "/", NewsSearchWeb do
     pipe_through :browser # Use the default browser stack
 
-    get "/", ArticleController, :index
+    get "/", SearchController, :new
+    get "/search", SearchController, :index
   end
 end
