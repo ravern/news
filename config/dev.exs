@@ -1,5 +1,9 @@
 use Mix.Config
 
+# Configure the name of the MongoDB database
+config :news_search, :store,
+  database: "news_search_dev"
+
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #
