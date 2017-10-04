@@ -1,7 +1,7 @@
-defmodule SGFeed.Scraper.Strategy.TheNewPaper do
+defmodule NewsSearch.Scraper.Strategy.TheNewPaper do
   @moduledoc false
 
-  @behaviour SGFeed.Scraper.Strategy
+  @behaviour NewsSearch.Scraper.Strategy
 
   def base_url, do: "http://www.tnp.sg"
 

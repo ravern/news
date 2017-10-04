@@ -8,12 +8,3 @@ config :news_search, NewsSearchWeb.Endpoint,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
-
-# Configure your database
-config :news_search, NewsSearch.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
-  database: "news_search_test",
-  hostname: "localhost",
-  pool: Ecto.Adapters.SQL.Sandbox

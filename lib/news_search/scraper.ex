@@ -35,7 +35,6 @@ defmodule NewsSearch.Scraper do
     |> Task.async_stream(&fetch_and_parse_article(&1, opts), max_concurrency: 10, timeout: timeout)
     |> Stream.map(fn({:ok, article}) -> article end)
     |> Stream.filter(&Kernel.!=(&1, nil))
-    |> Stream.map(&insert_if_needed(&1, opts))
     |> Enum.to_list()
   end
 
@@ -84,19 +83,6 @@ defmodule NewsSearch.Scraper do
         # TODO Better error handling
         Logger.debug("Failed to fetch article due to reason: #{reason}")
         nil
-    end
-  end
-
-  # Inserts the article into the DB and returns the Ecto struct if the
-  # `insert?` option is passed.
-  defp insert_if_needed(article, opts) do
-    if opts[:insert?] do
-      case NewsSearch.Articles.create_article(article) do
-        {:ok, article} -> article
-        {:error, changeset} -> IO.inspect(changeset); article
-      end
-    else
-      article
     end
   end
 

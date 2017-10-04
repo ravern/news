@@ -7,8 +7,7 @@ use Mix.Config
 
 # General application configuration
 config :news_search,
-  namespace: NewsSearch,
-  ecto_repos: [NewsSearch.Repo]
+  namespace: NewsSearch
 
 # Configures the endpoint
 config :news_search, NewsSearchWeb.Endpoint,

@@ -1,6 +1,5 @@
 defmodule NewsSearchWeb.SearchController do
   use NewsSearchWeb, :controller
-  alias NewsSearch.Articles
 
   @doc """
   Renders the initial search form.
